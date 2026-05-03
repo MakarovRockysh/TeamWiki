@@ -1,0 +1,70 @@
+---
+description: TeamWiki 对话归档行为约定。当用户口头说「对话归档/记一下/归档当前对话」时，自动写入 knowledge/conversation/。
+alwaysApply: true
+---
+
+# 对话归档（TeamWiki）
+
+## 1. 触发条件
+
+由用户**口头**触发，常见说法：
+
+- 「**对话归档**」
+- 「**归档当前对话**」
+- 「**记一下**」
+- 「**保存对话摘要**」
+
+无法由程序自动检测上下文百分比，以用户口头为准。
+
+## 2. 写入位置
+
+**唯一**位置：
+
+```
+teamwiki/knowledge/conversation/
+```
+
+如果工作区根目录是 `project_cursor/`，则完整路径为：
+
+```
+project_cursor/teamwiki/knowledge/conversation/
+```
+
+不要写入其他位置（如根目录的 `Hengdianweb_rebuild_1.0/knowledge/conversation/`，那是另一个项目的归档目录）。
+
+## 3. 文件命名
+
+- 推荐：`YYYY-MM-DD-中文短主题.md`
+- 或：`YYYY-MM-DD-short-topic-in-english.md`
+- 同一天多次归档时主题不同即可；勿无故覆盖已有归档
+
+## 4. 文件结构
+
+```markdown
+# YYYY-MM-DD · <主题>
+
+## 结论 / 范围
+1. ...
+2. ...
+
+## 涉及文件 / 模块
+- `teamwiki/<path>/...`
+
+## 关键词
+> word1, word2, 中文词1, 中文词2
+```
+
+## 5. 不要做的事
+
+- ❌ 不要写在 `teamwiki/` 根目录或随意子目录
+- ❌ 不要覆盖已有归档（除非用户明确要求）
+- ❌ 不要写流水账（"今天和谁聊了一下"），写就要写**结论**
+- ❌ 不要把代码大段贴入归档（用文件路径引用即可）
+
+## 6. 何时来读
+
+后续会话中遇到以下情况，应优先在 `knowledge/conversation/**/*.md` 搜索关键词：
+
+- 用户问「之前怎么定的」「记不记得某功能」
+- 做需求分析、设计回顾、复盘前
+- 开新会话首次回复时（如有近期归档可主动提及）

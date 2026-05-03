@@ -1,0 +1,227 @@
+/* ============================================
+   TeamWiki · Base · Liquid Glass
+   Apple / visionOS inspired (移植自 idea_share_html)
+   ============================================ */
+
+:root {
+  --bg: #050507;
+  --bg-2: #0b0b10;
+  --ink: #f5f5f7;
+  --ink-2: rgba(245, 245, 247, 0.72);
+  --ink-3: rgba(245, 245, 247, 0.48);
+  --ink-4: rgba(245, 245, 247, 0.28);
+  --line: rgba(255, 255, 255, 0.08);
+  --line-2: rgba(255, 255, 255, 0.14);
+  --line-3: rgba(255, 255, 255, 0.22);
+
+  --blue: #0a84ff;
+  --blue-2: #2997ff;
+
+  /* 模块色板（沿用原工具色 + 新增） */
+  --c-tools: #5e9bff;
+  --c-rules: #ff6a3d;
+  --c-comp: #6ad4a3;
+  --c-prompt: #ffd166;
+  --c-snippet: #b07bff;
+  --c-build: #4dd0e1;
+  --c-case: #ff7ab6;
+  --c-know: #8be9fd;
+  --c-usage: #f48120;
+  --c-agent: #00d4ff;
+  --c-search: #9aa0a8;
+  --c-graph: #ff5fb1;
+  --c-people: #ffb84d;
+
+  /* 4 层架构主色 */
+  --layer-asset: #5e9bff;
+  --layer-sediment: #ff7ab6;
+  --layer-practice: #6ad4a3;
+  --layer-meta: #ffd166;
+
+  --radius: 22px;
+  --radius-sm: 14px;
+  --radius-xs: 10px;
+
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display',
+    'PingFang SC', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, 'SF Mono',
+    Menlo, monospace;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+
+body {
+  background: radial-gradient(ellipse at top, #11121a 0%, var(--bg) 55%, #020204 100%);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.55;
+  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+a { color: inherit; text-decoration: none; }
+em { font-style: normal; color: var(--ink); border-bottom: 1px dashed rgba(255,255,255,0.25); }
+code, pre, kbd { font-family: var(--font-mono); }
+
+/* ===== 背景：液态光斑 ===== */
+.bg-orbs {
+  position: fixed; inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  opacity: 0.45;
+  mix-blend-mode: screen;
+  animation: float 22s ease-in-out infinite;
+}
+.orb-1 { width: 520px; height: 520px; left: -120px; top: -80px;
+  background: radial-gradient(circle, #1f63ff 0%, transparent 65%); }
+.orb-2 { width: 480px; height: 480px; right: -100px; top: 10%;
+  background: radial-gradient(circle, #ff5fb1 0%, transparent 65%); animation-delay: -6s; }
+.orb-3 { width: 600px; height: 600px; left: 30%; bottom: -200px;
+  background: radial-gradient(circle, #00d4ff 0%, transparent 65%); animation-delay: -12s; }
+.orb-4 { width: 380px; height: 380px; right: 10%; bottom: 5%;
+  background: radial-gradient(circle, #ffb84d 0%, transparent 65%); animation-delay: -18s; }
+
+@keyframes float {
+  0%, 100% { transform: translate(0,0) scale(1); }
+  33% { transform: translate(40px,-30px) scale(1.06); }
+  66% { transform: translate(-30px,20px) scale(0.95); }
+}
+
+.bg-grid {
+  position: fixed; inset: 0;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+  background-size: 56px 56px;
+  mask-image: radial-gradient(ellipse at center, #000 30%, transparent 80%);
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 30%, transparent 80%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ===== 液态玻璃 ===== */
+.glass {
+  position: relative;
+  background: rgba(20, 22, 30, 0.45);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  border: 1px solid rgba(255,255,255,0.10);
+  border-radius: var(--radius);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,0.18),
+    inset 0 -1px 0 rgba(0,0,0,0.25),
+    0 20px 50px rgba(0,0,0,0.45);
+  overflow: hidden;
+  isolation: isolate;
+}
+.glass-light {
+  background: rgba(20, 22, 30, 0.32);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: var(--radius-sm);
+}
+
+/* ===== 通用文字 ===== */
+.eyebrow {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 11px; letter-spacing: 0.18em;
+  color: var(--ink-3);
+  text-transform: uppercase;
+}
+.grad {
+  background: linear-gradient(120deg, #2997ff 0%, #b07bff 50%, #ff7ab6 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid var(--line-2);
+  color: var(--ink-2);
+}
+.chip-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--blue); }
+.kbd {
+  display: inline-block;
+  padding: 1px 6px;
+  border-radius: 6px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid var(--line-2);
+  border-bottom-width: 2px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-2);
+}
+
+/* ===== Buttons ===== */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--line-2);
+  background: rgba(255,255,255,0.04);
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn:hover {
+  background: rgba(255,255,255,0.08);
+  border-color: var(--line-3);
+  transform: translateY(-1px);
+}
+.btn-primary {
+  background: linear-gradient(135deg, var(--blue) 0%, #6e3cff 100%);
+  border-color: transparent;
+  box-shadow: 0 8px 24px rgba(10, 132, 255, 0.35);
+}
+.btn-primary:hover {
+  background: linear-gradient(135deg, var(--blue-2) 0%, #8a5fff 100%);
+}
+.btn-ghost {
+  background: transparent;
+  border-color: var(--line);
+}
+.btn-icon {
+  width: 32px; height: 32px;
+  padding: 0;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: 50%;
+  font-size: 14px;
+}
+
+/* ===== Selection ===== */
+::selection { background: rgba(41,151,255,0.32); color: #fff; }
+
+/* ===== Scrollbar ===== */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.08);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255,255,255,0.16);
+  background-clip: padding-box;
+  border: 2px solid transparent;
+}

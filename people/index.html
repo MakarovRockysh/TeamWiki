@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>贡献者 · TeamWiki</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/styles/base.css" />
+<link rel="stylesheet" href="/styles/wiki.css" />
+</head>
+<body>
+<div class="app">
+  <main class="main">
+    <div class="breadcrumb">
+      <a href="/">HOME</a><span class="sep">/</span><span>META</span><span class="sep">/</span><span>PEOPLE</span>
+    </div>
+    <div class="page-head">
+      <div style="flex:1;min-width:0;">
+        <span class="eyebrow">META · PEOPLE</span>
+        <h1>贡献者 / 专家黄页</h1>
+        <p class="ph-sub">这个人擅长什么、负责过什么。Wiki 的"人"维度——按技术领域可以一键找到团队内最懂的人。</p>
+      </div>
+      <div class="ph-meta"><span class="chip">4 人</span></div>
+    </div>
+
+    <div class="cards cards-3" id="grid"></div>
+  </main>
+</div>
+<script src="/scripts/data.js"></script>
+<script src="/scripts/layout.js"></script>
+<script>
+  const W = window.WIKI;
+  const colors = ['var(--c-tools)','var(--c-rules)','var(--c-comp)','var(--c-prompt)'];
+  document.getElementById('grid').innerHTML = W.people.map((p,i) => `
+    <div class="card">
+      <div class="card-head">
+        <div class="mono" style="--accent:${colors[i % colors.length]};">${p.name.slice(0,2).toUpperCase()}</div>
+        <div style="min-width:0;">
+          <h3 class="card-title">${p.name}</h3>
+          <div class="card-tag">${p.role}</div>
+        </div>
+        <div class="card-num">${String(i+1).padStart(2,'0')}</div>
+      </div>
+      <div class="card-desc">已贡献 ${p.contrib} 条沉淀内容</div>
+      <div class="card-foot">
+        <span class="meta">最近活跃</span>
+        <button class="copy-btn" onclick="window.toast('@${p.name}（demo 占位）')">@TA</button>
+      </div>
+    </div>
+  `).join('');
+</script>
+</body>
+</html>

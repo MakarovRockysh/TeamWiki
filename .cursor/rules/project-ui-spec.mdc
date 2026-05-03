@@ -1,0 +1,35 @@
+---
+description: TeamWiki 前端任意页面（HTML/CSS/JS）改动须对齐液态玻璃 UI 规范
+globs: "**/*.{html,css,js}"
+alwaysApply: true
+---
+
+实现或修改 **首页、模块页、卡片、列表、Builder 表单、Sidebar、Toast、按钮** 时，**必须先遵循**：
+
+`rules/ui-design.md`
+
+与 `rules/general.md` 中的说明。
+
+## 关键约束（高频违规点）
+
+- **色板**：只允许使用 `styles/base.css :root` 中定义的 token；禁止内联颜色 / 自定义新色值。
+- **玻璃材质**：必须复用 `.glass` / `.glass-light`，禁止自写 `backdrop-filter`。
+- **圆角**：只用 `--radius` (22px) / `--radius-sm` (14px) / `--radius-xs` (10px)。
+- **按钮**：每个 section 至多 1 个 `.btn-primary`；禁止 `shadow-lg` 等自由阴影。
+- **反馈**：唯一全局反馈是 `window.toast(msg)`，禁止 `alert()` / `confirm()` / `prompt()`。
+- **过渡**：缓动用 `cubic-bezier(0.2,0.8,0.2,1)`，禁止 `linear`；禁止旋转 / 大幅缩放等夸张动效。
+- **新模块页**：不要手写 nav / sidebar / footer，引入 `scripts/layout.js` 自动注入。
+- **数据**：不要在视图层硬编码数据，统一来自 `scripts/data.js`（Sprint 2+ 改为 fetch JSON）。
+
+## 4 层架构色（用于 layer-mod / 标签）
+
+- 资产 `--layer-asset: #5e9bff`
+- 沉淀 `--layer-sediment: #ff7ab6`
+- 实践 `--layer-practice: #6ad4a3`
+- 元   `--layer-meta: #ffd166`
+
+## 与规范不一致时
+
+须在 PR / 提交说明中写明**例外原因**，不应直接绕过。
+
+参考代码：`teamwiki/styles/{base.css, wiki.css}`、`teamwiki/scripts/layout.js`、`teamwiki/index.html`。

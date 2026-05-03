@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Prompt 仓 · TeamWiki</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/styles/base.css" />
+<link rel="stylesheet" href="/styles/wiki.css" />
+</head>
+<body>
+<div class="app">
+  <main class="main">
+    <div class="breadcrumb">
+      <a href="/">HOME</a><span class="sep">/</span><span>ASSETS</span><span class="sep">/</span><span>PROMPTS</span>
+    </div>
+    <div class="page-head">
+      <div style="flex:1;min-width:0;">
+        <span class="eyebrow">ASSETS · PROMPTS</span>
+        <h1>Prompt 仓</h1>
+        <p class="ph-sub">按场景分类的可复用 Prompt。这是知识库里复用率最高的一类，每个 prompt 标注热度（uses）。</p>
+      </div>
+      <div class="ph-meta">
+        <span class="chip">8 个</span>
+        <span class="chip">不绑定模型</span>
+      </div>
+    </div>
+
+    <div class="cards cards-3" id="grid"></div>
+  </main>
+</div>
+<script src="/scripts/data.js"></script>
+<script src="/scripts/layout.js"></script>
+<script>
+  const W = window.WIKI;
+  const grid = document.getElementById('grid');
+  grid.innerHTML = W.prompts.map((p,i) => `
+    <div class="card">
+      <div class="card-head">
+        <div class="mono" style="--accent:var(--c-prompt);">${p.scene.slice(0,2).toUpperCase()}</div>
+        <div style="min-width:0;">
+          <h3 class="card-title">${p.name}</h3>
+          <div class="card-tag">${p.scene}</div>
+        </div>
+        <div class="card-num">${String(i+1).padStart(2,'0')}</div>
+      </div>
+      <div class="card-desc">${p.desc}</div>
+      <div class="card-foot">
+        <span class="meta">${p.model} · 用过 ${p.uses}×</span>
+        <button class="copy-btn" data-name="${p.name}">复制 prompt</button>
+      </div>
+    </div>
+  `).join('');
+  grid.addEventListener('click', (e) => {
+    if (e.target.classList.contains('copy-btn')) {
+      navigator.clipboard?.writeText(`[Prompt 模板：${e.target.dataset.name}]\n\n请按以下格式输出：\n1. ...`);
+      window.toast?.(`已复制 prompt：${e.target.dataset.name}`);
+    }
+  });
+</script>
+</body>
+</html>

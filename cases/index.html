@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>实战案例 · TeamWiki</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/styles/base.css" />
+<link rel="stylesheet" href="/styles/wiki.css" />
+</head>
+<body>
+<div class="app">
+  <main class="main">
+    <div class="breadcrumb">
+      <a href="/">HOME</a><span class="sep">/</span><span>SEDIMENT</span><span class="sep">/</span><span>CASES</span>
+    </div>
+    <div class="page-head">
+      <div style="flex:1;min-width:0;">
+        <span class="eyebrow">SEDIMENT · CASES</span>
+        <h1>实战案例</h1>
+        <p class="ph-sub">已落地项目的复盘。每个案例都标注：范围 / 关键结果 / 时间 / owner。</p>
+      </div>
+      <div class="ph-meta"><span class="chip">6 个</span></div>
+    </div>
+
+    <div class="list" id="list"></div>
+  </main>
+</div>
+<script src="/scripts/data.js"></script>
+<script src="/scripts/layout.js"></script>
+<script>
+  const W = window.WIKI;
+  document.getElementById('list').innerHTML = W.cases.map(c => `
+    <div class="list-row">
+      <div class="lr-main">
+        <div class="lr-title">${c.name}</div>
+        <div class="lr-sub">范围：${c.scope} · 关键结果：${c.result}</div>
+      </div>
+      <div class="lr-meta">
+        <span class="tag t-green">${c.result}</span>
+        <span class="tag">@${c.owner}</span>
+        <span class="tag">${c.date}</span>
+      </div>
+      <div class="lr-meta">
+        <a class="btn btn-ghost" href="javascript:void(0)" onclick="window.toast('打开复盘详情（demo 占位）')">查看复盘</a>
+      </div>
+    </div>
+  `).join('');
+</script>
+</body>
+</html>

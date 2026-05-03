@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>组件仓 · TeamWiki</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/styles/base.css" />
+<link rel="stylesheet" href="/styles/wiki.css" />
+</head>
+<body>
+<div class="app">
+  <main class="main">
+    <div class="breadcrumb">
+      <a href="/">HOME</a><span class="sep">/</span><span>ASSETS</span><span class="sep">/</span><span>COMPONENTS</span>
+    </div>
+    <div class="page-head">
+      <div style="flex:1;min-width:0;">
+        <span class="eyebrow">ASSETS · COMPONENTS</span>
+        <h1>组件仓</h1>
+        <p class="ph-sub">团队复用的 UI / Hook / Util。所有组件附带使用次数，热度高的会进入项目基础包默认勾选。</p>
+      </div>
+      <div class="ph-meta">
+        <span class="chip">12 个</span>
+        <span class="chip">3 类</span>
+      </div>
+    </div>
+
+    <div class="toolbar">
+      <div class="filter-chips">
+        <button class="filter-chip active" data-tag="all">全部</button>
+        <button class="filter-chip" data-tag="UI">UI</button>
+        <button class="filter-chip" data-tag="Hook">Hook</button>
+        <button class="filter-chip" data-tag="Util">Util</button>
+      </div>
+    </div>
+
+    <div class="cards cards-3" id="grid"></div>
+  </main>
+</div>
+<script src="/scripts/data.js"></script>
+<script src="/scripts/layout.js"></script>
+<script>
+  const W = window.WIKI;
+  const tagColor = { UI:'t-blue', Hook:'t-green', Util:'t-purple' };
+  const grid = document.getElementById('grid');
+  function render(filter='all') {
+    const items = filter==='all' ? W.components : W.components.filter(c => c.tag === filter);
+    grid.innerHTML = items.map((c,i) => `
+      <div class="card">
+        <div class="card-head">
+          <div class="mono" style="--accent:var(--c-comp);">${c.tag.slice(0,2).toUpperCase()}</div>
+          <div style="min-width:0;">
+            <h3 class="card-title">${c.name}</h3>
+            <div class="card-tag">${c.tag}</div>
+          </div>
+          <div class="card-num">${String(i+1).padStart(2,'0')}</div>
+        </div>
+        <div class="card-desc">${c.desc}</div>
+        <div class="card-foot">
+          <span class="meta">已被 ${c.uses} 处引用</span>
+          <button class="copy-btn" data-name="${c.name}">复制</button>
+        </div>
+      </div>
+    `).join('');
+  }
+  render();
+  document.querySelectorAll('.filter-chip').forEach(b => {
+    b.addEventListener('click', () => {
+      document.querySelectorAll('.filter-chip').forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+      render(b.dataset.tag);
+    });
+  });
+  grid.addEventListener('click', (e) => {
+    if (e.target.classList.contains('copy-btn')) {
+      navigator.clipboard?.writeText(`// import { ${e.target.dataset.name} } from '@team/components'`);
+      window.toast?.(`已复制 import：${e.target.dataset.name}`);
+    }
+  });
+</script>
+</body>
+</html>

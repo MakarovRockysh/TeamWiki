@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>工具仓 · TeamWiki</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/styles/base.css" />
+<link rel="stylesheet" href="/styles/wiki.css" />
+</head>
+<body>
+<div class="app">
+  <main class="main">
+    <div class="breadcrumb">
+      <a href="/">HOME</a><span class="sep">/</span><span>ASSETS</span><span class="sep">/</span><span>TOOLS</span>
+    </div>
+    <div class="page-head">
+      <div style="flex:1;min-width:0;">
+        <span class="eyebrow">ASSETS · TOOLS</span>
+        <h1>工具仓</h1>
+        <p class="ph-sub">按工作流挑出来的 AI 工具。每个工具记录：是什么 / 帮到什么 / 谁是 owner / 团队使用频率。</p>
+      </div>
+      <div class="ph-meta">
+        <span class="chip">9 个</span>
+        <span class="chip">3 类用途</span>
+      </div>
+    </div>
+
+    <div class="toolbar">
+      <div class="filter-chips">
+        <button class="filter-chip active" data-tag="all">全部</button>
+        <button class="filter-chip" data-tag="终端编程">终端编程</button>
+        <button class="filter-chip" data-tag="页面生成">页面生成</button>
+        <button class="filter-chip" data-tag="边缘部署">边缘部署</button>
+        <button class="filter-chip" data-tag="架构图">架构图</button>
+        <button class="filter-chip" data-tag="设计资产">设计资产</button>
+        <button class="filter-chip" data-tag="项目脚手架">脚手架</button>
+        <button class="filter-chip" data-tag="演示生成">演示生成</button>
+      </div>
+    </div>
+
+    <div class="cards cards-3" id="grid"></div>
+  </main>
+</div>
+<script src="/scripts/data.js"></script>
+<script src="/scripts/layout.js"></script>
+<script>
+  const W = window.WIKI;
+  const grid = document.getElementById('grid');
+  const colorPick = ['var(--c-tools)','var(--c-rules)','var(--c-comp)','var(--c-prompt)','var(--c-snippet)','var(--c-build)','var(--c-case)','var(--c-know)','var(--c-usage)'];
+  function render(filter='all') {
+    const items = filter === 'all' ? W.tools : W.tools.filter(t => t.tag === filter);
+    grid.innerHTML = items.map((t, i) => `
+      <div class="card">
+        <div class="card-head">
+          <div class="mono" style="--accent:${colorPick[i % colorPick.length]};">${t.name.slice(0,2).toUpperCase()}</div>
+          <div style="min-width:0;">
+            <h3 class="card-title">${t.name}</h3>
+            <div class="card-tag">${t.tag}</div>
+          </div>
+          <div class="card-num">${t.num}</div>
+        </div>
+        <div class="card-desc">${t.desc}</div>
+        <div class="card-foot">
+          <span class="meta">@${t.owner} · ${t.used}</span>
+          <span class="actions"><button class="copy-btn" data-name="${t.name}">复制 prompt</button></span>
+        </div>
+      </div>
+    `).join('');
+  }
+  render();
+  document.querySelectorAll('.filter-chip').forEach(b => {
+    b.addEventListener('click', () => {
+      document.querySelectorAll('.filter-chip').forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+      render(b.dataset.tag);
+    });
+  });
+  grid.addEventListener('click', (e) => {
+    if (e.target.classList.contains('copy-btn')) {
+      const name = e.target.dataset.name;
+      const text = `请使用 ${name}：[在这里写下你的诉求]`;
+      navigator.clipboard?.writeText(text);
+      window.toast?.(`已复制 ${name} 的 prompt 模板`);
+    }
+  });
+</script>
+</body>
+</html>

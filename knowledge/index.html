@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>知识库 · TeamWiki</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/styles/base.css" />
+<link rel="stylesheet" href="/styles/wiki.css" />
+</head>
+<body>
+<div class="app">
+  <main class="main">
+    <div class="breadcrumb">
+      <a href="/">HOME</a><span class="sep">/</span><span>SEDIMENT</span><span class="sep">/</span><span>KNOWLEDGE</span>
+    </div>
+    <div class="page-head">
+      <div style="flex:1;min-width:0;">
+        <span class="eyebrow">SEDIMENT · KNOWLEDGE</span>
+        <h1>知识库</h1>
+        <p class="ph-sub">五阶段闭环沉淀的原始内容：会议 · PRD · 原型 · 对话归档 · 踩坑记录。最终会建立强关系索引，连接到「功能视角」。</p>
+      </div>
+      <div class="ph-meta"><span class="chip">32 条</span></div>
+    </div>
+
+    <div class="toolbar">
+      <div class="filter-chips">
+        <button class="filter-chip active" data-stage="all">全部</button>
+        <button class="filter-chip" data-stage="meeting">会议</button>
+        <button class="filter-chip" data-stage="prd">PRD</button>
+        <button class="filter-chip" data-stage="prototype">原型</button>
+        <button class="filter-chip" data-stage="dialogue">对话归档</button>
+        <button class="filter-chip" data-stage="pitfall">踩坑</button>
+      </div>
+    </div>
+
+    <div class="list" id="list"></div>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>强关系索引（计划）</h2>
+        <a class="more" href="/graph/">关系图谱 →</a>
+      </div>
+      <div class="placeholder">
+        <h3>会议 → PRD → 原型 → 代码 → 测试 → 运营，串联成 Wiki</h3>
+        <p>未来通过知识库 Agent 自动维护实体与关系，每个功能都能一键定位它的来龙去脉。</p>
+      </div>
+    </section>
+  </main>
+</div>
+<script src="/scripts/data.js"></script>
+<script src="/scripts/layout.js"></script>
+<script>
+  const W = window.WIKI;
+  const list = document.getElementById('list');
+  const stageColor = { meeting:'t-blue', prd:'t-orange', prototype:'t-pink', dialogue:'t-purple', pitfall:'t-green' };
+  const stageLabel = { meeting:'会议', prd:'PRD', prototype:'原型', dialogue:'对话', pitfall:'踩坑' };
+  function render(stage='all') {
+    const items = stage==='all' ? W.knowledge : W.knowledge.filter(k => k.stage === stage);
+    list.innerHTML = items.map(k => `
+      <div class="list-row">
+        <div class="lr-main">
+          <div class="lr-title">${k.name}</div>
+          <div class="lr-sub">最近更新：${k.updated}</div>
+        </div>
+        <div class="lr-meta">
+          <span class="tag ${stageColor[k.stage]||''}">${stageLabel[k.stage]||k.stage}</span>
+          ${k.tags.map(t => `<span class="tag">${t}</span>`).join('')}
+        </div>
+        <div class="lr-meta">
+          <a class="btn btn-ghost" href="javascript:void(0)" onclick="window.toast('打开原始 markdown（demo 占位）')">查看</a>
+        </div>
+      </div>
+    `).join('');
+  }
+  render();
+  document.querySelectorAll('.filter-chip').forEach(b => {
+    b.addEventListener('click', () => {
+      document.querySelectorAll('.filter-chip').forEach(x => x.classList.remove('active'));
+      b.classList.add('active');
+      render(b.dataset.stage);
+    });
+  });
+</script>
+</body>
+</html>

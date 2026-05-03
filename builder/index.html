@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>项目基础包构建器 · TeamWiki</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/styles/base.css" />
+<link rel="stylesheet" href="/styles/wiki.css" />
+</head>
+<body>
+<div class="app">
+  <main class="main">
+    <div class="breadcrumb">
+      <a href="/">HOME</a><span class="sep">/</span><span>ASSETS</span><span class="sep">/</span><span>BUILDER</span>
+    </div>
+    <div class="page-head">
+      <div style="flex:1;min-width:0;">
+        <span class="eyebrow">ASSETS · BUILDER</span>
+        <h1>项目基础包构建器</h1>
+        <p class="ph-sub">勾选技术栈、组件、规范、设计风格 → 一键生成项目脚手架。同时输出 Cursor / Claude / Codex 通用配置。</p>
+      </div>
+    </div>
+
+    <div class="builder">
+      <div>
+        <div class="builder-section">
+          <h3>技术栈</h3>
+          <div class="option-grid" data-group="stack"></div>
+        </div>
+        <div class="builder-section">
+          <h3>设计风格</h3>
+          <div class="option-grid" data-group="style"></div>
+        </div>
+        <div class="builder-section">
+          <h3>规则集（让 AI 有边界）</h3>
+          <div class="option-grid" data-group="rules"></div>
+        </div>
+        <div class="builder-section">
+          <h3>导出目标（不绑定单一工具）</h3>
+          <div class="option-grid" data-group="targets"></div>
+        </div>
+      </div>
+
+      <aside class="builder-side">
+        <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:10px;">
+          <h3 style="margin:0;font-size:14px;">📦 当前选择</h3>
+          <span class="chip" id="picksCount">0 项</span>
+        </div>
+        <div id="picks" style="font-size:12px;color:var(--ink-2);line-height:1.7;min-height:80px;padding:10px;border-radius:10px;background:rgba(255,255,255,0.03);border:1px solid var(--line);">
+          还没勾选 — 试试左边的选项。
+        </div>
+
+        <div style="margin-top:18px;">
+          <h3 style="font-size:13px;margin:0 0 8px;font-family:var(--font-mono);letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);">3 种使用方式</h3>
+          <pre class="code" id="cmd"># 等待勾选...</pre>
+        </div>
+
+        <button class="btn btn-primary" id="genBtn" style="width:100%;justify-content:center;margin-top:14px;">生成基础包</button>
+      </aside>
+    </div>
+  </main>
+</div>
+<script src="/scripts/data.js"></script>
+<script src="/scripts/layout.js"></script>
+<script>
+  const W = window.WIKI;
+  const opts = W.builderOptions;
+  const state = { stack: [], style: [], rules: [], targets: [] };
+
+  document.querySelectorAll('[data-group]').forEach(g => {
+    const key = g.dataset.group;
+    g.innerHTML = opts[key].map(o => `
+      <label class="option" data-id="${o.id}">
+        <span class="opt-mark"></span>
+        <span>${o.label}</span>
+      </label>
+    `).join('');
+    g.addEventListener('click', (e) => {
+      const opt = e.target.closest('.option');
+      if (!opt) return;
+      const id = opt.dataset.id;
+      if (state[key].includes(id)) {
+        state[key] = state[key].filter(x => x !== id);
+        opt.classList.remove('checked');
+        opt.querySelector('.opt-mark').textContent = '';
+      } else {
+        state[key].push(id);
+        opt.classList.add('checked');
+        opt.querySelector('.opt-mark').textContent = '✓';
+      }
+      sync();
+    });
+  });
+
+  function sync() {
+    const all = [].concat(...Object.values(state));
+    document.getElementById('picksCount').textContent = `${all.length} 项`;
+    if (!all.length) {
+      document.getElementById('picks').textContent = '还没勾选 — 试试左边的选项。';
+      document.getElementById('cmd').textContent = '# 等待勾选...';
+      return;
+    }
+    document.getElementById('picks').innerHTML = Object.entries(state)
+      .filter(([, v]) => v.length)
+      .map(([k, v]) => `<div><span style="color:var(--ink-3);font-family:var(--font-mono);font-size:11px;">[${k}]</span> ${v.join(' · ')}</div>`)
+      .join('');
+    const params = encodeURIComponent(JSON.stringify(state));
+    document.getElementById('cmd').innerHTML = `<span class="c-comment"># 1. 用 cursor 拉</span>
+cursor pull <span class="c-str">teamwiki://builder?p=${params.slice(0, 40)}...</span>
+
+<span class="c-comment"># 2. 直接 git clone</span>
+git clone teamwiki/scaffold-${state.stack[0] || 'next'}.git my-app
+
+<span class="c-comment"># 3. 复制 prompt 到任意 LLM</span>
+请用以下配置生成项目脚手架：${all.join(', ')}`;
+  }
+
+  document.getElementById('genBtn').addEventListener('click', () => {
+    const all = [].concat(...Object.values(state));
+    if (!all.length) { window.toast?.('请先勾选至少 1 项'); return; }
+    window.toast?.(`已生成基础包：${all.length} 项配置 + ${state.targets.length || 4} 种导出格式`);
+  });
+</script>
+</body>
+</html>

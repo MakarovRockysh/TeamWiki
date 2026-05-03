@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>搜索 · TeamWiki</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/styles/base.css" />
+<link rel="stylesheet" href="/styles/wiki.css" />
+<style>
+  .search-input {
+    width: 100%;
+    padding: 18px 22px;
+    border-radius: 16px;
+    background: rgba(20,22,30,0.5);
+    border: 1px solid var(--line-2);
+    color: var(--ink);
+    font-size: 17px;
+    font-family: var(--font-sans);
+    outline: none;
+    backdrop-filter: blur(20px);
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .search-input:focus {
+    border-color: rgba(41,151,255,0.5);
+    background: rgba(20,22,30,0.65);
+  }
+  .search-hint {
+    margin-top: 10px;
+    font-size: 12px;
+    color: var(--ink-3);
+    font-family: var(--font-mono);
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <main class="main">
+    <div class="breadcrumb">
+      <a href="/">HOME</a><span class="sep">/</span><span>META</span><span class="sep">/</span><span>SEARCH</span>
+    </div>
+    <div class="page-head">
+      <div style="flex:1;min-width:0;">
+        <span class="eyebrow">META · GLOBAL SEARCH</span>
+        <h1>全局搜索</h1>
+        <p class="ph-sub">跨工具 / 规则 / 组件 / Prompt / Snippet / 案例 / 知识库 一键搜索。<em>搜不到的查询，会自动变成"待补条目"。</em></p>
+      </div>
+    </div>
+
+    <input class="search-input" id="q" placeholder="搜：cursor / 规则 / 玻璃 / 会议 / DeepSeek……   按 ⌘K 也能从任何页面唤起" autofocus />
+    <div class="search-hint">支持模糊匹配 · 跨所有模块 · 搜索历史会进入"待补条目"</div>
+
+    <div class="section">
+      <div class="section-head"><h2 id="resultTitle">推荐入口</h2></div>
+      <div class="list" id="results"></div>
+    </div>
+  </main>
+</div>
+<script src="/scripts/data.js"></script>
+<script src="/scripts/layout.js"></script>
+<script>
+  const W = window.WIKI;
+  // 把所有内容打平索引
+  const corpus = [
+    ...W.tools.map(t => ({ kind: 'tools',      mod: '工具仓',     title: t.name,                sub: t.desc, url: '/tools/' })),
+    ...W.rules.map(r => ({ kind: 'rules',      mod: '规则仓',     title: `${r.num} ${r.name}`,  sub: r.desc, url: '/rules/' })),
+    ...W.components.map(c => ({ kind: 'components', mod: '组件仓', title: c.name,                sub: c.desc, url: '/components/' })),
+    ...W.prompts.map(p => ({ kind: 'prompts',  mod: 'Prompt 仓',  title: p.name,                sub: p.desc, url: '/prompts/' })),
+    ...W.snippets.map(s => ({ kind: 'snippets',mod: '代码片段',   title: s.name,                sub: s.desc, url: '/snippets/' })),
+    ...W.cases.map(c => ({ kind: 'cases',     mod: '实战案例',   title: c.name,                sub: `${c.scope} · ${c.result}`, url: '/cases/' })),
+    ...W.knowledge.map(k => ({ kind: 'knowledge', mod: '知识库', title: k.name,                sub: `更新：${k.updated}`, url: '/knowledge/' })),
+    ...W.usage.map(u => ({ kind: 'usage',     mod: '使用说明',   title: u.name,                sub: u.desc, url: '/usage/' })),
+  ];
+
+  const colorMap = { tools:'t-blue', rules:'t-orange', components:'t-green', prompts:'t-orange', snippets:'t-purple', cases:'t-pink', knowledge:'t-blue', usage:'t-orange' };
+
+  function render(list, title) {
+    document.getElementById('resultTitle').textContent = title;
+    document.getElementById('results').innerHTML = list.length
+      ? list.map(r => `
+          <a class="list-row" href="${r.url}" style="text-decoration:none;">
+            <div class="lr-main">
+              <div class="lr-title">${r.title}</div>
+              <div class="lr-sub">${r.sub}</div>
+            </div>
+            <div class="lr-meta"><span class="tag ${colorMap[r.kind]||''}">${r.mod}</span></div>
+            <div class="lr-meta"><span style="color:var(--ink-3);font-family:var(--font-mono);font-size:11px;">→</span></div>
+          </a>`).join('')
+      : `<div class="placeholder">
+          <h3>没有找到匹配</h3>
+          <p>这条查询会被记录为"待补条目"，下次内容补充时会优先解决它。</p>
+        </div>`;
+  }
+  render(corpus.slice(0, 10), '推荐入口（默认显示前 10 条）');
+
+  document.getElementById('q').addEventListener('input', (e) => {
+    const q = e.target.value.trim().toLowerCase();
+    if (!q) { render(corpus.slice(0, 10), '推荐入口（默认显示前 10 条）'); return; }
+    const hit = corpus.filter(r =>
+      r.title.toLowerCase().includes(q) || r.sub.toLowerCase().includes(q)
+    );
+    render(hit, `匹配 ${hit.length} 条 · 关键字 "${q}"`);
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>规则仓 · TeamWiki</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/styles/base.css" />
+<link rel="stylesheet" href="/styles/wiki.css" />
+</head>
+<body>
+<div class="app">
+  <main class="main">
+    <div class="breadcrumb">
+      <a href="/">HOME</a><span class="sep">/</span><span>ASSETS</span><span class="sep">/</span><span>RULES</span>
+    </div>
+    <div class="page-head">
+      <div style="flex:1;min-width:0;">
+        <span class="eyebrow">ASSETS · RULES</span>
+        <h1>规则仓</h1>
+        <p class="ph-sub">让 AI 有边界。设计 / PRD / 输出 / 编码 4 类规范，可一键导出为 <code>.cursor/rules/*.mdc</code> / <code>AGENTS.md</code> / <code>CLAUDE.md</code>。</p>
+      </div>
+      <div class="ph-meta">
+        <span class="chip">4 条</span>
+        <button class="btn btn-ghost" id="exportAll">一键导出全部</button>
+      </div>
+    </div>
+
+    <div class="list" id="list"></div>
+
+    <section class="section">
+      <div class="section-head">
+        <h2>导出格式预览</h2>
+      </div>
+      <pre class="code">
+<span class="c-comment"># .cursor/rules/00-design.mdc · 自动生成</span>
+<span class="c-key">---
+description:</span> <span class="c-str">"团队设计规范 v4 · 颜色 / 间距 / 圆角"</span>
+<span class="c-key">globs:</span> <span class="c-str">["src/**/*.tsx", "src/**/*.css"]</span>
+<span class="c-key">alwaysApply:</span> <span class="c-str">true</span>
+<span class="c-key">---</span>
+
+<span class="c-comment">## 颜色</span>
+- 主色：<span class="c-str">--blue: #0a84ff</span>
+- ...</pre>
+    </section>
+  </main>
+</div>
+<script src="/scripts/data.js"></script>
+<script src="/scripts/layout.js"></script>
+<script>
+  const W = window.WIKI;
+  const list = document.getElementById('list');
+  list.innerHTML = W.rules.map(r => `
+    <div class="list-row">
+      <div class="lr-main">
+        <div class="lr-title">${r.num} · ${r.name}</div>
+        <div class="lr-sub">${r.desc}</div>
+      </div>
+      <div class="lr-meta">
+        ${r.tags.map(t => `<span class="tag t-blue">${t}</span>`).join('')}
+        <span class="tag">${r.updated}</span>
+      </div>
+      <div class="lr-meta">
+        <button class="btn btn-ghost copy-rule" data-name="${r.name}" data-scope="${r.scope}">复制</button>
+        <button class="btn btn-ghost open-rule" data-name="${r.name}">详情</button>
+      </div>
+    </div>
+  `).join('');
+
+  list.addEventListener('click', (e) => {
+    const el = e.target;
+    if (el.classList.contains('copy-rule')) {
+      navigator.clipboard?.writeText(`# ${el.dataset.name}\n# scope: ${el.dataset.scope}\n\n[规则内容...]`);
+      window.toast?.(`已复制：${el.dataset.name}`);
+    }
+    if (el.classList.contains('open-rule')) {
+      window.toast?.(`${el.dataset.name} 详情页（demo 占位）`);
+    }
+  });
+  document.getElementById('exportAll').addEventListener('click', () => {
+    window.toast?.('已生成 4 个文件：.cursor/rules/*.mdc + AGENTS.md + CLAUDE.md');
+  });
+</script>
+</body>
+</html>

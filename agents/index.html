@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Agent · TeamWiki</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="/styles/base.css" />
+<link rel="stylesheet" href="/styles/wiki.css" />
+</head>
+<body>
+<div class="app">
+  <main class="main">
+    <div class="breadcrumb">
+      <a href="/">HOME</a><span class="sep">/</span><span>PRACTICE</span><span class="sep">/</span><span>AGENTS</span>
+    </div>
+    <div class="page-head">
+      <div style="flex:1;min-width:0;">
+        <span class="eyebrow">PRACTICE · AGENTS</span>
+        <h1>Agent 控制台</h1>
+        <p class="ph-sub">把 wiki 维护、测试、运营这些"重复劳动"交给 Agent，写 wiki 是工作的副产物，而不是额外工作。</p>
+      </div>
+      <div class="ph-meta"><span class="chip">3 个</span></div>
+    </div>
+
+    <div class="cards cards-3" id="grid"></div>
+  </main>
+</div>
+<script src="/scripts/data.js"></script>
+<script src="/scripts/layout.js"></script>
+<script>
+  const W = window.WIKI;
+  document.getElementById('grid').innerHTML = W.agents.map((a,i) => `
+    <div class="card">
+      <div class="card-head">
+        <div class="mono" style="--accent:var(--c-agent);">${String(i+1).padStart(2,'0')}</div>
+        <div style="min-width:0;">
+          <h3 class="card-title">${a.name}</h3>
+          <div class="card-tag">${a.status}</div>
+        </div>
+      </div>
+      <div class="card-desc">${a.desc}</div>
+      <div class="card-foot">
+        <span class="meta">${a.status}</span>
+        <button class="copy-btn" onclick="window.toast('打开 ${a.name} 配置（demo 占位）')">配置</button>
+      </div>
+    </div>
+  `).join('');
+</script>
+</body>
+</html>

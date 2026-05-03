@@ -1,0 +1,56 @@
+---
+description: TeamWiki 项目内一切需求分析、回顾、汇报、文档生成，必须以 knowledge/ 为首要数据源，不要凭记忆推测。
+alwaysApply: true
+---
+
+# knowledge 是 TeamWiki 的真源
+
+## 原则
+
+- TeamWiki 项目内的**需求分析、复盘、汇报、文档生成、对外说明**，**必须以本项目的 `teamwiki/knowledge/` 为首要依据**，不要仅凭聊天记忆或推测凑数。
+- 若用户未指定其他项目，**默认只汇总与 TeamWiki 相关的工作**；用户明确要求纳入其他仓库（如 `Hengdianweb_rebuild_1.0/`、`idea_share_html/`）时，再补充说明数据来源。
+
+## 生成前必做
+
+1. **先读 `knowledge/conversation/`**
+   - 按用户给的**日期区间**用文件名前缀 `YYYY-MM-DD` 筛选，或列出近期 `.md` 后选相关篇目。
+   - 归档内为「结论 / 范围 / 待办」摘要，**优先据此写汇报条目**。
+
+2. **再视需要查阅**：
+   - `knowledge/prd/` — 产品需求规格
+   - `knowledge/plan/` — 建设方案 / Sprint 路线
+   - `knowledge/tech/` — 架构与技术决策
+   - `knowledge/business-flow/` — 业务流程
+   - `knowledge/release/` — 发布说明
+   - `knowledge/others/` — 临时素材
+
+3. **跨工具规范查询**：
+   - `rules/general.md` — 总则与互引导航
+   - `rules/ui-design.md` — UI 规范
+   - `rules/output-format.md` — 输出格式
+   - `rules/knowledge-writing.md` — 写作规范
+   - `rules/rules-writing.md` — 规则元规范
+   - `rules/ai-coding-behavior.md` — AI 编码行为
+
+## 输出风格（除非用户另行指定）
+
+- **汇报口吻**，条目用 1、2、3… 或用户要求的格式
+- **不写仓库路径、文件名**（除非用户要留痕或对接脚本）
+- 某日在 `knowledge/conversation/` **无对应归档**时，**如实说明无法从知识库还原**，勿编造；可提示用户补归档
+
+## 与「对话归档」约定一致
+
+- 新建归档仍写入 **`knowledge/conversation/`**，命名与结构见同目录 `README.md`
+- 详细归档触发与格式见 `.cursor/rules/auto-archive.mdc`
+
+## 多项目工作区
+
+`project_cursor/` 工作区下同时存在多个项目，**TeamWiki 相关路径**始终为：
+
+```
+project_cursor/teamwiki/knowledge/
+project_cursor/teamwiki/rules/
+project_cursor/teamwiki/.cursor/rules/
+```
+
+不要把 TeamWiki 的内容写入其他项目的 `knowledge/` 或 `rules/` 目录。
