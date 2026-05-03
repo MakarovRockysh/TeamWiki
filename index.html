@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-<title>TeamWiki · 团队第二大脑</title>
-<meta name="description" content="资产 / 沉淀 / 实践 / 元 — 让团队的脑子沉淀下来，不绑定单一工具。" />
+<title>TeamWiki · 团队的知识库 / 规则库 / 资产仓</title>
+<meta name="description" content="资产 / 沉淀 / 实践 / 元 — 一个团队 wiki，markdown 是真源，不绑定单一工具。" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
@@ -21,24 +21,24 @@
     </div>
     <div class="page-head">
       <div style="flex:1;min-width:0;">
-        <span class="eyebrow">TEAMWIKI · 2026 · TEAM SECOND BRAIN</span>
-        <h1>不止是提效 — 把团队的脑子<span class="grad">沉淀下来</span></h1>
-        <p class="ph-sub">基础设施 ≠ 流水线。资产、沉淀、实践、元四层架构，<em>不绑定任何工具</em>，随时间复利增长。</p>
+        <span class="eyebrow">TEAMWIKI · KNOWLEDGE / RULES / ASSETS</span>
+        <h1>一个团队 wiki，<span class="grad">markdown 是真源</span></h1>
+        <p class="ph-sub">资产、沉淀、实践、元 — 4 层架构组织所有内容；<em>不绑定单一工具</em>，可输出 Cursor / Claude / Codex 通用配置。</p>
       </div>
       <div class="ph-meta">
-        <span class="chip"><span class="chip-dot" style="background:var(--c-tools);"></span>9 工具</span>
-        <span class="chip"><span class="chip-dot" style="background:var(--c-rules);"></span>4 规则</span>
-        <span class="chip"><span class="chip-dot" style="background:var(--c-know);"></span>32 沉淀</span>
-        <span class="chip"><span class="chip-dot" style="background:var(--c-build);"></span>1 构建器</span>
+        <span class="chip"><span class="chip-dot" style="background:var(--c-tools);"></span>4 层</span>
+        <span class="chip"><span class="chip-dot" style="background:var(--c-rules);"></span>13 模块</span>
+        <span class="chip"><span class="chip-dot" style="background:var(--c-know);"></span>3 套配置导出</span>
+        <span class="chip"><span class="chip-dot" style="background:var(--c-build);"></span>纯静态零依赖</span>
       </div>
     </div>
 
-    <!-- 关键指标 -->
+    <!-- 项目自身指标（非业务成果，仅描述本项目结构） -->
     <div class="stats">
-      <div class="stat"><div class="stat-num">≈ 70%</div><div class="stat-label">效率提升</div></div>
-      <div class="stat"><div class="stat-num">2-3天 → 3h</div><div class="stat-label">单功能交付</div></div>
-      <div class="stat"><div class="stat-num">100%</div><div class="stat-label">研发覆盖</div></div>
+      <div class="stat"><div class="stat-num">4</div><div class="stat-label">架构层</div></div>
       <div class="stat"><div class="stat-num">13</div><div class="stat-label">模块</div></div>
+      <div class="stat"><div class="stat-num">6</div><div class="stat-label">规则集</div></div>
+      <div class="stat"><div class="stat-num">7</div><div class="stat-label">knowledge 子目录</div></div>
     </div>
 
     <!-- 4 层架构入口 -->
@@ -71,7 +71,7 @@
             </div>
           </div>
           <div class="card-desc">设计、PRD、输出、编码 4 类规范，按场景检索，一键复制到剪贴板。</div>
-          <div class="card-foot"><span class="meta">4 条已沉淀</span><span class="actions">→</span></div>
+          <div class="card-foot"><span class="meta">示例 · 4 类</span><span class="actions">→</span></div>
         </a>
         <a class="card" href="/knowledge/">
           <div class="card-head">
@@ -82,15 +82,15 @@
             </div>
           </div>
           <div class="card-desc">按阶段（会议 / PRD / 原型 / 对话归档 / 踩坑）浏览，找一段被沉淀的上下文。</div>
-          <div class="card-foot"><span class="meta">32 条已沉淀</span><span class="actions">→</span></div>
+          <div class="card-foot"><span class="meta">示例 · 5 类阶段</span><span class="actions">→</span></div>
         </a>
       </div>
     </section>
 
-    <!-- 设计哲学 -->
+    <!-- 设计原则 -->
     <section class="section">
       <div class="section-head">
-        <h2>这是基础设施，不是流水线</h2>
+        <h2>设计原则</h2>
       </div>
       <div class="cards cards-3">
         <div class="card">
@@ -98,12 +98,12 @@
           <div class="card-desc">同一份知识库，可以同时输出 <code>.cursor/rules</code>、<code>AGENTS.md</code>、<code>CLAUDE.md</code>。换工具不会断。</div>
         </div>
         <div class="card">
-          <h3 class="card-title">原始文件是真源</h3>
+          <h3 class="card-title">Markdown 是真源</h3>
           <div class="card-desc">所有内容以 markdown 存在 git，TeamWiki 只是视图层。个人迁移、团队分叉都成立。</div>
         </div>
         <div class="card">
-          <h3 class="card-title">复利增长</h3>
-          <div class="card-desc">每解决一个问题就沉淀一条 → 下一次更聪明一点。这是组织的"第二大脑"。</div>
+          <h3 class="card-title">写 wiki 是副产物</h3>
+          <div class="card-desc">通过 Agent 自动归档与索引，避免"组织号召大家写"的反人性流程。</div>
         </div>
       </div>
     </section>

@@ -72,7 +72,7 @@
   // ----- Footer -----
   const footer = `
     <div class="foot">
-      <span>© TeamWiki · ${W.brand?.tagline || '团队第二大脑'}</span>
+      <span>© TeamWiki · ${W.brand?.tagline || '团队的知识库 + 规则库 + 资产仓'}</span>
       <span>不绑定单一工具 · Cursor / Claude / Codex 都能用</span>
     </div>
   `;

@@ -1,8 +1,8 @@
-# TeamWiki · 团队第二大脑（Demo 骨架）
+# TeamWiki · 团队的知识库 / 规则库 / 资产仓（Demo 骨架）
 
-一份按 **4 层架构 + 13 模块** 落地的团队 wiki demo，沿用 `idea_share_html` 的液态玻璃风格。**纯静态、零依赖**，部署到 Cloudflare Pages 即可。
+一份按 **4 层架构 + 13 模块** 落地的团队 wiki demo，液态玻璃风格。**纯静态、零依赖**，部署到 Cloudflare Pages 即可。
 
-> 当前版本是 **Sprint 1 · 主壳**：所有模块占位 + 真实示例数据 + 关键交互（复制 / 勾选 / 搜索）已可用。后续按 Sprint 推进。
+> 当前版本是 **Sprint 1 · 主壳**：所有模块占位 + demo 示例数据 + 关键交互（复制 / 勾选 / 搜索）已可用。后续按 Sprint 推进，把示例数据替换为真实 markdown 数据源。
 
 ---
 
@@ -47,7 +47,7 @@ teamwiki/
 │   ├── data.js             所有模块示例数据（window.WIKI）
 │   └── layout.js           顶部 nav + 侧边 sidebar + footer 自动注入
 │
-├── knowledge/              团队第二大脑 · 项目自身的沉淀（详见下方）
+├── knowledge/              项目自身的沉淀（详见下方）
 │   ├── README.md
 │   ├── prd/                产品需求规格（4 层架构、Builder PRD）
 │   ├── plan/               建设方案 / Sprint 路线图
@@ -101,13 +101,13 @@ teamwiki/
 
 ---
 
-## 设计原则（来自和 Sam 哥的对话）
+## 设计原则
 
-- **基础设施 ≠ 流水线**：把"团队的脑子"沉淀下来，价值随时间复利增长。
 - **不绑定单一工具**：同一份知识 / 规则可输出多种格式，Cursor / Claude / Codex 都能用。
 - **markdown 是真源**：原始文件留在 git，wiki 只是视图层；个人迁移、团队分叉都成立。
 - **写 wiki 是工作的副产物**：靠 Agent 自动归档，不靠"组织号召大家写"。
 - **每条都能用**：纯展示无操作的内容会被忽略，每个条目都内置"复制 / 引用 / 一键应用"出口。
+- **增量演进**：每解决一个问题就沉淀一条，下一次更聪明一点。
 
 ---
 
@@ -115,15 +115,15 @@ teamwiki/
 
 参考 `Hengdianweb_rebuild_1.0/` 的范式，TeamWiki 拥有自己的 **三件套**：
 
-### `knowledge/` — 团队第二大脑（项目沉淀）
+### `knowledge/` — 项目自身的沉淀
 
 | 子目录 | 用途 | 已收录 |
 |-------|------|--------|
 | `prd/` | 产品需求规格 | 4 层架构 PRD、Builder PRD |
 | `plan/` | 建设方案 / 路线图 | Sprint 路线图（6 个 Sprint + 长期愿景） |
 | `tech/` | 技术决策 / 架构 | 4 层架构与共享骨架、不绑定工具的导出标准 |
-| `business-flow/` | 业务流程 | 功能视角全链路（五阶段闭环） |
-| `conversation/` | 对话归档 | 与 Sam 哥讨论·团队第二大脑、Sprint 1 主壳搭建过程 |
+| `business-flow/` | 业务流程 | 功能视角全链路 |
+| `conversation/` | 对话归档 | Sprint 1 主壳搭建过程 |
 | `release/` | 发布说明 | RELEASE_2026-05-03_Sprint1 主壳 |
 | `others/` | 临时素材 | （空，每月梳理） |
 

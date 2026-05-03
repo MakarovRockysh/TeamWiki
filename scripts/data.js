@@ -3,7 +3,7 @@
    各模块从 window.WIKI 取数
    ============================================ */
 window.WIKI = {
-  brand: { name: 'TeamWiki', sub: 'TEAM · 2026', tagline: '团队第二大脑' },
+  brand: { name: 'TeamWiki', sub: 'TEAM · 2026', tagline: '团队的知识库 + 规则库 + 资产仓' },
 
   // 4 层 + 模块清单
   layers: [
@@ -125,47 +125,50 @@ window.WIKI = {
                { id: 'plain',    label: '通用 prompt.txt' } ],
   },
 
+  // 示例数据（占位）；接入真实 markdown 后由 knowledge/cases/ 替代
   cases: [
-    { name: 'AI 开发转型 6 周复盘',         scope: '团队级',  result: '效率 ≈ 70%', date: '2026.04.30', owner: 'mzli' },
-    { name: '基础设施模块化重构',           scope: '工程',    result: '部署时间 -55%', date: '2026.04.10', owner: 'team' },
-    { name: '原型先行：从描述到点击',       scope: '产研',    result: '需求确认 1 轮', date: '2026.04.05', owner: 'pm'   },
-    { name: 'Cursor + DeepSeek 接入实践',   scope: '工具',    result: 'Token 成本 -80%', date: '2026.03.28', owner: 'mzli' },
-    { name: 'AI 视频后期：HDR → SDR 流水线', scope: '内容',    result: '出片 4× 提速', date: '2026.03.20', owner: 'mzli' },
-    { name: '组件库统一：4 项目 → 1 包',    scope: '工程',    result: '维护成本 -60%', date: '2026.03.12', owner: 'team' },
+    { name: '示例 · 组件库统一：N 项目 → 1 包',  scope: '工程',   result: 'demo',  date: '示例', owner: 'team' },
+    { name: '示例 · 静态站点 CDN 部署',          scope: '工程',   result: 'demo',  date: '示例', owner: 'team' },
+    { name: '示例 · 原型先行的需求评审流程',     scope: '产研',   result: 'demo',  date: '示例', owner: 'pm'   },
+    { name: '示例 · Cursor 自定义模型接入',      scope: '工具',   result: 'demo',  date: '示例', owner: 'mzli' },
+    { name: '示例 · 知识库自动归档机制',         scope: '工具',   result: 'demo',  date: '示例', owner: 'mzli' },
+    { name: '示例 · 多端配置一键导出',           scope: '工程',   result: 'demo',  date: '示例', owner: 'team' },
   ],
 
+  // 示例数据（占位）；接入真实 markdown 后由 knowledge/ 各子目录替代
   knowledge: [
-    { stage: 'meeting',   name: '2026.04.28 周会·AI 工作流统一',  tags: ['决策','流程'], updated: '4 天前' },
-    { stage: 'meeting',   name: '2026.04.21 立项·知识库系统化',   tags: ['立项'],        updated: '11 天前' },
-    { stage: 'prd',       name: 'PRD · 项目基础包构建器 v1',       tags: ['新需求'],      updated: '1 天前' },
-    { stage: 'prd',       name: 'PRD · 知识库 Wiki 视图 v0.3',      tags: ['迭代'],        updated: '3 天前' },
-    { stage: 'prototype', name: '原型 · TeamWiki 首页 v2',          tags: ['UI'],          updated: '1 天前' },
-    { stage: 'prototype', name: '流程 · 项目新建基础包',            tags: ['流程'],        updated: '2 天前' },
-    { stage: 'dialogue',  name: 'AI 对话 · 第三页改造的脑暴过程',   tags: ['原始素材'],    updated: '3 小时前' },
-    { stage: 'pitfall',   name: '踩坑 · DeepSeek 不支持 image_url', tags: ['工具兼容'],    updated: '6 天前' },
+    { stage: 'meeting',   name: '示例 · 项目立项会议纪要',         tags: ['立项'],     updated: '示例' },
+    { stage: 'meeting',   name: '示例 · 周会决策与 TODO',          tags: ['决策'],     updated: '示例' },
+    { stage: 'prd',       name: '示例 · 项目基础包构建器 PRD',      tags: ['需求'],     updated: '示例' },
+    { stage: 'prd',       name: '示例 · 4 层架构与模块清单 PRD',    tags: ['架构'],     updated: '示例' },
+    { stage: 'prototype', name: '示例 · 首页原型',                  tags: ['UI'],       updated: '示例' },
+    { stage: 'prototype', name: '示例 · 项目新建流程图',            tags: ['流程'],     updated: '示例' },
+    { stage: 'dialogue',  name: '示例 · 关键决策的脑暴归档',        tags: ['对话'],     updated: '示例' },
+    { stage: 'pitfall',   name: '示例 · 工具接入兼容性踩坑',        tags: ['踩坑'],     updated: '示例' },
   ],
 
+  // 示例数据（占位）；接入真实 markdown 后由 knowledge/usage/ 替代
   usage: [
-    { name: 'Cursor + DeepSeek 接入',      time: '5 min', desc: '从 0 到 1 配置 DeepSeek 走 OpenAI-compat 接口' },
-    { name: 'Claude Code + DeepSeek',      time: '4 min', desc: 'ANTHROPIC_BASE_URL 写法与冲突排查' },
-    { name: '项目基础包：拉下来 → 跑起来', time: '3 min', desc: '从勾选页 / git clone / cursor 拉取的三种姿势' },
-    { name: '规则库怎么写一条新规则',      time: '6 min', desc: 'frontmatter / 文件命名 / 适用范围 / 优先级' },
-    { name: '会议纪要自动归档（Bot）',     time: '8 min', desc: '飞书 / 微信机器人对接知识库自动写入' },
-    { name: 'Cursor CLI 进驻服务器',       time: '10 min',desc: '把 CLI 部署到生产服务器做日志监控' },
-    { name: '一键导出多工具配置',          time: '2 min', desc: '同一份知识库 → Cursor / Codex / Claude 三套' },
-    { name: '快捷键全集',                  time: '1 min', desc: 'TeamWiki 内置的所有快捷键速查' },
+    { name: '示例 · 项目基础包：拉下来 → 跑起来', time: '3 min', desc: '从勾选页 / git clone / cursor 拉取的三种姿势' },
+    { name: '示例 · 规则库怎么写一条新规则',      time: '6 min', desc: 'frontmatter / 文件命名 / 适用范围 / 优先级' },
+    { name: '示例 · 会议纪要自动归档（Bot）',     time: '8 min', desc: '机器人对接知识库自动写入' },
+    { name: '示例 · 一键导出多工具配置',          time: '2 min', desc: '同一份知识库 → Cursor / Codex / Claude 三套' },
+    { name: '示例 · 快捷键全集',                  time: '1 min', desc: 'TeamWiki 内置的所有快捷键速查' },
+    { name: '示例 · 知识库写作规范概览',          time: '4 min', desc: '目录归属 / 命名 / frontmatter / 关键词行' },
   ],
 
+  // 示例数据（占位）；Sprint 5 接入真实 Agent 后替换
   agents: [
-    { name: '知识库 Agent',  status: '设计中', desc: '定时扫描原始 markdown 文件，建立实体与关系索引，更新到 Wiki 视图。' },
-    { name: '测试 Agent',    status: '试点中', desc: '聚合 PRD / 详设 / 接口契约，按测试范围批量生成用例与脚本。' },
-    { name: '运营 Agent',    status: '设计中', desc: 'Cursor CLI 进驻服务器，监控运行状态，异常日志自动告警。' },
+    { name: '知识库 Agent', status: '示例', desc: '定时扫描原始 markdown 文件，建立实体与关系索引，更新到 Wiki 视图。' },
+    { name: '测试 Agent',   status: '示例', desc: '聚合 PRD / 详设 / 接口契约，按测试范围批量生成用例与脚本。' },
+    { name: '运营 Agent',   status: '示例', desc: '驻留服务器监控运行状态，异常日志自动告警。' },
   ],
 
+  // 示例贡献者（占位）；Sprint 6 接入 git contributor 后由真实数据替代
   people: [
-    { name: 'mzli',  role: '主创 / 知识库 / 规则库',     contrib: 124 },
-    { name: 'team',  role: '团队公共账号（多人协作）',    contrib: 87  },
-    { name: 'pm',    role: '产品 / PRD / 原型',          contrib: 35  },
-    { name: 'qa',    role: '测试 / 测试 Agent 接入',      contrib: 12  },
+    { name: 'demo-user-a', role: '示例 · 知识库维护',       contrib: 0 },
+    { name: 'demo-user-b', role: '示例 · 规则库 / PRD',     contrib: 0 },
+    { name: 'demo-user-c', role: '示例 · 测试 / Agent',     contrib: 0 },
+    { name: 'demo-user-d', role: '示例 · 团队公共账号',     contrib: 0 },
   ],
 };
